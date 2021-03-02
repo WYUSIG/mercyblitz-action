@@ -36,13 +36,13 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-signin">
+    <form class="form-signin" action="/userPage/loginForward">
         <h1 class="h3 mb-3 font-weight-normal">登录</h1>
         <label for="inputEmail" class="sr-only">请输出电子邮件</label>
-        <input type="email" id="inputEmail" class="form-control"
+        <input type="email" id="inputEmail" class="form-control" name="userNam"
                placeholder="请输入电子邮件" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control"
+        <input type="password" id="inputPassword" class="form-control" name="password"
                placeholder="请输入密码" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 20px;" id="signIn">
             Sign in
@@ -72,27 +72,27 @@
 </div>
 <script>
     window.onload = function (ev) {
-        $('#signIn').click(function () {
-            $.ajax({
-                type: 'post',
-                url: '/user/signIn',
-                dateType: 'json',
-                data: {
-                    userNam: $("#inputEmail").val(),
-                    password: $("#inputPassword").val()
-                },
-                success: function (result) {
-                    result = JSON.parse(result);
-                    $('#resultContent').text('code：'+result.code+', msg: '+result.msg)
-                    $('#myModal').modal('show')
-                },
-                error: function () {
-                    $('#resultContent').val('请求失败！')
-                    $('#myModal').modal('show')
-                }
-            })
-            return false;
-        })
+        // $('#signIn').click(function () {
+        //     $.ajax({
+        //         type: 'get',
+        //         url: '/userPage/loginForward',
+        //         dateType: 'json',
+        //         data: {
+        //             userNam: $("#inputEmail").val(),
+        //             password: $("#inputPassword").val()
+        //         },
+        //         success: function (result) {
+        //             result = JSON.parse(result);
+        //             $('#resultContent').text('code：'+result.code+', msg: '+result.msg)
+        //             $('#myModal').modal('show')
+        //         },
+        //         error: function () {
+        //             $('#resultContent').val('请求失败！')
+        //             $('#myModal').modal('show')
+        //         }
+        //     })
+        //     return false;
+        // })
         $('#signUp').click(function () {
             window.location.href = "register";
             return false;

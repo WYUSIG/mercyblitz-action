@@ -6,10 +6,14 @@ import org.geektimes.projects.user.service.UserService;
 import org.geektimes.projects.user.service.impl.UserServiceImpl;
 import org.geektimes.web.mvc.controller.RestController;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -36,7 +40,7 @@ public class UserRestController implements RestController {
      * @return
      */
     @Path("/signIn")
-    public ResultDto signIn(HttpServletRequest request, HttpServletResponse response) {
+    public ResultDto signIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userNam = request.getParameter("userNam");
         String password = request.getParameter("password");
         return userService.getByNameAndPassword(userNam, password);
