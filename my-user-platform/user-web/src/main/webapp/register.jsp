@@ -1,30 +1,11 @@
 <head>
-    <jsp:directive.include file="/WEB-INF/jsp/prelude/include-head-meta.jspf"/>
-    <title>Sign In</title>
+    <jsp:directive.include
+            file="/WEB-INF/jsp/prelude/include-head-meta.jspf"/>
+    <title>Sign Up</title>
     <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
-        .container {
+        .container-lg {
             margin-top: 50px;
         }
-
-        .form-control{
-            margin-top: 20px;
-        }
-
         .footer{
             display: flex;
             flex-wrap: nowrap;
@@ -35,20 +16,28 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <form class="form-signin">
-        <h1 class="h3 mb-3 font-weight-normal">登录</h1>
-        <label for="inputEmail" class="sr-only">请输出电子邮件</label>
-        <input type="email" id="inputEmail" class="form-control"
-               placeholder="请输入电子邮件" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control"
-               placeholder="请输入密码" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 20px;" id="signIn">
-            Sign in
-        </button>
+<div class="container-lg">
+    <h1 class="h3 mb-3 font-weight-normal">注册</h1>
+    <form>
+        <div class="form-group">
+            <label for="name">姓名</label>
+            <input type="text" class="form-control" id="name">
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">电话</label>
+            <input type="text" class="form-control" id="phoneNumber">
+        </div>
+        <div class="form-group">
+            <label for="email">邮箱</label>
+            <input type="text" class="form-control" id="email">
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="text" class="form-control" id="password">
+        </div>
+        <button type="button" class="btn btn-lg btn-primary btn-block" id="signUp">sign up</button>
         <p class="mt-5 mb-3 text-muted footer">&copy; 2017-2021
-            <button class="btn btn-sm btn-primary" id="signUp" type="button">sign up</button>
+            <button class="btn btn-sm btn-primary" id="signIn" type="button">sign in</button>
         </p>
     </form>
     <!-- Modal -->
@@ -72,14 +61,16 @@
 </div>
 <script>
     window.onload = function (ev) {
-        $('#signIn').click(function () {
+        $('#signUp').click(function () {
             $.ajax({
                 type: 'post',
-                url: '/user/signIn',
+                url: '/user/signUp',
                 dateType: 'json',
                 data: {
-                    userNam: $("#inputEmail").val(),
-                    password: $("#inputPassword").val()
+                    name: $("#name").val(),
+                    phoneNumber: $("#phoneNumber").val(),
+                    email: $("#email").val(),
+                    password: $("#password").val()
                 },
                 success: function (result) {
                     result = JSON.parse(result);
@@ -91,10 +82,9 @@
                     $('#myModal').modal('show')
                 }
             })
-            return false;
         })
-        $('#signUp').click(function () {
-            window.location.href = "register";
+        $('#signIn').click(function () {
+            window.location.href = "loginForm";
             return false;
         })
     }
