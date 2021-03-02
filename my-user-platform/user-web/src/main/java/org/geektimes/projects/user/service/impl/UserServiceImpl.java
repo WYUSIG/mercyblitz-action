@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
         if(result == true) {
             return new ResultDto(200,"注册成功！");
         } else {
-            return new ResultDto(500,"注册失败！");
+            return new ResultDto(500,"注册失败！电话或邮箱已经被注册过！");
         }
     }
 }

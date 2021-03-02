@@ -31,8 +31,19 @@ public class DatabaseUserRepository implements UserRepository {
 
     @Override
     public boolean save(User user) {
-        return executeUpdate("INSERT INTO users(name, phoneNumber, email, password) VALUES(?, ?, ?, ?)",
-                COMMON_EXCEPTION_HANDLER, user.getName(), user.getPhoneNumber(), user.getEmail(), user.getPassword());
+        boolean isUserRegistered = executeQuery("SELECT id FROM users WHERE phoneNumber = ? OR email = ? FOR UPDATE", resultSet -> {
+            if (resultSet.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        }, COMMON_EXCEPTION_HANDLER, user.getPhoneNumber(), user.getEmail());
+        if (isUserRegistered == false) {
+            return executeUpdate("INSERT INTO users(name, phoneNumber, email, password) VALUES(?, ?, ?, ?)",
+                    COMMON_EXCEPTION_HANDLER, user.getName(), user.getPhoneNumber(), user.getEmail(), user.getPassword());
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -86,7 +97,6 @@ public class DatabaseUserRepository implements UserRepository {
             preparedStatement.execute();
             return true;
         } catch (Throwable e) {
-            e.printStackTrace();
             exceptionHandler.accept(e);
             return false;
         }
@@ -101,7 +111,6 @@ public class DatabaseUserRepository implements UserRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             return function.apply(resultSet);
         } catch (Throwable e) {
-            e.printStackTrace();
             exceptionHandler.accept(e);
         }
         return null;

@@ -18,7 +18,7 @@
 <body>
 <div class="container-lg">
     <h1 class="h3 mb-3 font-weight-normal">注册</h1>
-    <form>
+    <form id="form">
         <div class="form-group">
             <label for="name">姓名</label>
             <input type="text" class="form-control" id="name">
@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
             <label for="password">密码</label>
-            <input type="text" class="form-control" id="password">
+            <input type="password" class="form-control" id="password">
         </div>
         <button type="button" class="btn btn-lg btn-primary btn-block" id="signUp">sign up</button>
         <p class="mt-5 mb-3 text-muted footer">&copy; 2017-2021
@@ -62,6 +62,26 @@
 <script>
     window.onload = function (ev) {
         $('#signUp').click(function () {
+            if($("#name").val() === ''){
+                $('#resultContent').text('请填写姓名！')
+                $('#myModal').modal('show')
+                return false
+            }
+            if($("#phoneNumber").val() === ''){
+                $('#resultContent').text('请填写电话！')
+                $('#myModal').modal('show')
+                return false
+            }
+            if($("#email").val() === ''){
+                $('#resultContent').text('请填写邮箱！')
+                $('#myModal').modal('show')
+                return false
+            }
+            if($("#password").val() === ''){
+                $('#resultContent').text('请填写密码！')
+                $('#myModal').modal('show')
+                return false
+            }
             $.ajax({
                 type: 'post',
                 url: '/user/signUp',
@@ -78,10 +98,11 @@
                     $('#myModal').modal('show')
                 },
                 error: function () {
-                    $('#resultContent').val('请求失败！')
+                    $('#resultContent').text('请求失败！')
                     $('#myModal').modal('show')
                 }
             })
+            return false;
         })
         $('#signIn').click(function () {
             window.location.href = "loginForm";

@@ -87,7 +87,7 @@
         //             $('#myModal').modal('show')
         //         },
         //         error: function () {
-        //             $('#resultContent').val('请求失败！')
+        //             $('#resultContent').text('请求失败！')
         //             $('#myModal').modal('show')
         //         }
         //     })
